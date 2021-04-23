@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block content %}
+<body>
+<main>
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div>
+            <h1 class="display-2 fw-normal">{{ category }}</h1>
+        </div>
+    </div>
+    <div class="container">
+        <section class="text-center mb-4">
+            {% for i in range(3) %}
+            <div class="row wow fadeIn">
+                {% for j in range(4) %}
+                <div class="col-lg-3 col-md-6 mb-4">
+                    {% if 12*(number-1)+j+4*i < length %}
+                    <div class="card">
+                        <div class="view overlay">
+                            <img class="card-img-top" src="/static/{{items[12*(number-1)+j+4*i].image}}">
+                            <a href="/item/{{items[12*(number-1)+j+4*i].id}}">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5>
+                                <strong>
+                                    <a class="text-dark" href="/item/{{items[12*(number-1)+j+4*i].id}}">
+                                        {{ items[12*(number-1)+j+4*i].title }}
+                                    </a>
+                                </strong>
+                            </h5>
+                            <h5>
+                                {{ items[12*(number-1)+j+4*i].about }}
+                            </h5>
+                            <h4 class="font-weight-bold blue-text">
+                                <strong>{{ items[12*(number-1)+j+4*i].price }} р.</strong>
+                            </h4>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </section>
+        <nav class="d-flex justify-content-center wow fadeIn">
+            <ul class="pagination pg-blue">
+                <li class="page-item">
+                    {% if number == 1 %}
+                    <a href="/{{items[0].category}}/1" class="page-link disabled" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    {% elif number > 1 %}
+                    <a href="/{{items[0].category}}/{{number - 1}}" class="page-link disabled" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    {% endif %}
+                </li>
+                {% if number == 1 %}
+                <li class="page-item active">
+                    <a href="/{{items[0].category}}/1" class="page-link">
+                        <span aria-hidden="true">1</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a href="/{{items[0].category}}/1" class="page-link">
+                        <span aria-hidden="true">1</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if number == 2 %}
+                <li class="page-item active">
+                    <a href="/{{items[0].category}}/2" class="page-link">
+                        <span aria-hidden="true">2</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a href="/{{items[0].category}}/2" class="page-link">
+                        <span aria-hidden="true">2</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if 3 < limit %}
+                    {% if number == 3 %}
+                    <li class="page-item active">
+                        <a href="/{{items[0].category}}/3" class="page-link">
+                            <span aria-hidden="true">3</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a href="/{{items[0].category}}/3" class="page-link">
+                            <span aria-hidden="true">3</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                {% else %}
+                    <li class="page-item disabled">
+                        <a href="/{{items[0].category}}/3" class="page-link">
+                            <span aria-hidden="true">3</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if 4 < limit %}
+                    {% if number == 4 %}
+                    <li class="page-item active">
+                        <a href="/{{items[0].category}}/4" class="page-link">
+                            <span aria-hidden="true">4</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a href="/{{items[0].category}}/4" class="page-link">
+                            <span aria-hidden="true">4</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                {% else %}
+                    <li class="page-item disabled">
+                        <a href="/{{items[0].category}}/4" class="page-link">
+                            <span aria-hidden="true">4</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if 5 < limit %}
+                    {% if number == 5 %}
+                    <li class="page-item active">
+                        <a href="/{{items[0].category}}/5" class="page-link">
+                            <span aria-hidden="true">5</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a href="/{{items[0].category}}/5" class="page-link">
+                            <span aria-hidden="true">5</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                {% else %}
+                    <li class="page-item disabled">
+                        <a href="/{{items[0].category}}/5" class="page-link">
+                            <span aria-hidden="true">5</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if number < limit %}
+                    <li class="page-item">
+                        <a href="/{{items[0].category}}/{{number + 1}}" class="page-link" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a href="/{{items[0].category}}/{{number + 1}}" class="page-link" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</main>
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
+></script>
+</body>
+{% endblock %}

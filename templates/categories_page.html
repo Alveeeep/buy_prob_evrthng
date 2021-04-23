@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<body>
+<main>
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-2 fw-normal">{{ category }}</h1>
+        </div>
+        <div class="product-device shadow-sm d-none d-md-block"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+    <div class="container">
+        {% for i in range(4) %}
+        <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+            {% for j in range(2) %}
+            <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden"
+                 style="border-radius: 21px 21px 21px 21px;">
+                <div class="my-3 py-3">
+                    <div class="display-5">
+                        <a class="text-light text-centered"
+                           href={{cat[j+2*i]['category']}}>{{cat[j+2*i]['name']}}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+        integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+        crossorigin="anonymous"></script>
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
+></script>
+
+
+</body>
+{% endblock %}

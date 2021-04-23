@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<body>
+<main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+        <div class="row wow fadeIn">
+            <div class="col-md-6 mb-4">
+                <img src="/static/{{item.image}}" alt="{{item.title}}" class="img-fluid">
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="p-4">
+                    <p class="lead">
+                        <span class="mr-1">
+                            {{item.price}} р.
+                        </span>
+                    </p>
+                    <p class="lead font-weight-bold">{{item.title}}</p>
+                    <p>
+                        {{item.about}}
+                    </p>
+                    <p>
+                        {{item.about_on_page}}
+                    </p>
+                    <form action="" class="d-flex justify-content-left" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.amount(class="form-control", style="width: 100px", placeholder="Кол-во") }}
+                        {{ form.submit(type="submit", class="btn btn-outline-primary btn-md my-0", value="В корзину") }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
+></script>
+</body>
+{% endblock %}

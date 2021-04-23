@@ -1,0 +1,74 @@
+{
+  "gadgets": [
+    {
+      "name": "Мобильные телефоны",
+      "category": "/k0"
+    },
+    {
+      "name": "Планшеты",
+      "category": "/k1"
+    },
+    {
+      "name": "Наушники",
+      "category": "/k2"
+    },
+    {
+      "name": "Умные часы",
+      "category": "/k3"
+    },
+    {
+      "name": "Powerbank",
+      "category": "/k4"
+    },
+    {
+      "name": "Портативные колонки",
+      "category": "/k6"
+    },
+    {
+      "name": "Action камеры",
+      "category": "/k7"
+    },
+    {
+      "name": "Квадрокоптеры",
+      "category": "/k5"
+    },
+    {
+      "name": "Карты памяти !НУЖНО ПЕРЕМЕСТИТЬ В ФОТО",
+      "category": "/k8"
+    }
+  ],
+  "computers": [
+    {
+      "name": "ПК",
+      "category": "/k9"
+    },
+    {
+      "name": "Ноутбуки",
+      "category": "/k10"
+    },
+    {
+      "name": "Приставки",
+      "category": "/k11"
+    },
+    {
+      "name": "Мониторы",
+      "category": "/k12"
+    },
+    {
+      "name": "Комлектующие",
+      "category": "/k13"
+    },
+    {
+      "name": "Клавиатуры и мышки",
+      "category": "/k14"
+    },
+    {
+      "name": "Печать",
+      "category": "/k15"
+    },
+    {
+      "name": "Wi-Fi",
+      "category": "/k16"
+    }
+  ]
+}
