@@ -74,5 +74,5 @@ def get_image():
         img_file.close()
 
 
-#parse()
-#get_image()
+# parse()
+# get_image()

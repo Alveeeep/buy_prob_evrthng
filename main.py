@@ -1,3 +1,5 @@
+import unicodedata
+
 from werkzeug.utils import redirect
 
 from data import db_session
@@ -7,7 +9,7 @@ from forms.login import LoginForm, RegisterForm
 from forms.amount import Amount
 from data.users import User
 from data.items import Item
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 import json
 import math
 
@@ -106,20 +108,66 @@ def redirect_to_items2(category):
 @app.route('/item/<int:item_id>', methods=['GET', 'POST'])
 def item_page(item_id):
     form = Amount()
+    db_sess = db_session.create_session()
+    item = db_sess.query(Item).filter(Item.id == int(item_id)).first()
     if form.validate_on_submit():
-        amount = form.amount.data
+        if current_user.is_authenticated:
+            amount = form.amount.data
+            id = current_user.get_id()
+            user = db_sess.query(User).filter(User.id == id).first()
+            cart = user.cart
+            if cart is not None:
+                cart = cart.split(', ')
+                cart.append(str(item_id) + ': ' + str(amount))
+                user.cart = ', '.join(cart)
+                db_sess.commit()
+            else:
+                cart = [str(item_id) + ': ' + str(amount)]
+                user.cart = ', '.join(cart)
+                db_sess.commit()
+            return render_template("item_page.html", item=item, form=form,
+                                   message='Добавлено в корзину', title=item.title)
+        else:
+            return render_template("item_page.html", item=item, form=form,
+                                   message='Авторизируйтесь для продолжения', title=item.title)
+    return render_template("item_page.html", item=item, form=form, title=item.title)
 
-        return redirect('/buy/{}'.format(str(item_id)))
+
+@app.route('/cart', methods=['GET', 'POST'])
+def buy_page():
+    id = current_user.get_id()
     db_sess = db_session.create_session()
-    item = db_sess.query(Item).filter(Item.id == int(item_id)).first()
-    return render_template("item_page.html", item=item, form=form)
-
-
-@app.route('/buy', methods=['GET', 'POST'])
-def buy_page(item_id):
-    db_sess = db_session.create_session()
-    item = db_sess.query(Item).filter(Item.id == int(item_id)).first()
-    return render_template('buying_page.html', item=item)
+    user = db_sess.query(User).filter(User.id == id).first()
+    cart = user.cart
+    print(user.name, cart)
+    cart_dict = {}
+    cart = cart.split(', ')
+    for el in cart:
+        el = el.split(': ')
+        item = db_sess.query(Item).filter(Item.id == int(el[0])).first()
+        price = item.price
+        price = price[2:]
+        price = unicodedata.normalize("NFKD", price)
+        price = price.strip()
+        if item.title in cart_dict.keys():
+            it = {
+                'price': int(''.join(price.split())),
+                'amount': int(el[1]) + int(cart_dict[item.title]['amount']),
+                'image': item.image,
+                'link': '/item/{}'.format(el[0])
+            }
+        else:
+            it = {
+                'price': int(''.join(price.split())),
+                'amount': int(el[1]),
+                'image': item.image,
+                'link': '/item/{}'.format(el[0])
+            }
+        cart_dict[item.title] = it
+    total = 0
+    for key, value in cart_dict.items():
+        total += value['price']
+    return render_template('buying_page.html', cart=cart_dict, title='Корзина', total=total)
 
 
 @app.route('/<category>/<page_number>')

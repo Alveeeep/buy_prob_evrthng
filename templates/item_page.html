@@ -26,6 +26,13 @@
                         {{ form.amount(class="form-control", style="width: 100px", placeholder="Кол-во") }}
                         {{ form.submit(type="submit", class="btn btn-outline-primary btn-md my-0", value="В корзину") }}
                     </form>
+                    {% if form.validate_on_submit() %}
+                        {% if current_user.is_authenticated %}
+                            <div class="alert alert-success" role="alert">{{ message }}</div>
+                        {% else %}
+                            <div class="alert alert-warning" role="alert">{{ message }}</div>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
