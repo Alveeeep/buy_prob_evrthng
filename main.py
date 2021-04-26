@@ -77,8 +77,19 @@ def main_page():
     form = SearchForm()
     if form.validate_on_submit():
         res = form.search.data
-        return render_template("index.html", title=res, form=form)
+        return redirect('/search/{}/1'.format(res))
     return render_template("index.html", title="Главная", form=form)
+
+
+@app.route('/search/<title>/<page_number>', methods=['GET', 'POST'])
+def search(title, page_number):
+    db_sess = db_session.create_session()
+    items = db_sess.query(Item).filter(Item.title.like('%{}%'.format(title))).all()
+    limit = math.ceil(len(items) / 12)
+    items_len = len(items)
+    return render_template("items.html", items=items, title=title, category='Найдено по запросу: ' + title,
+                           number=int(page_number),
+                           length=items_len, limit=limit, link='search/' + title)
 
 
 @app.route('/gadget', methods=['GET', 'POST'])
@@ -139,7 +150,6 @@ def buy_page():
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == id).first()
     cart = user.cart
-    print(user.name, cart)
     cart_dict = {}
     cart = cart.split(', ')
     for el in cart:
@@ -154,14 +164,16 @@ def buy_page():
                 'price': int(''.join(price.split())),
                 'amount': int(el[1]) + int(cart_dict[item.title]['amount']),
                 'image': item.image,
-                'link': '/item/{}'.format(el[0])
+                'link': '/item/{}'.format(el[0]),
+                'id': el[0]
             }
         else:
             it = {
                 'price': int(''.join(price.split())),
                 'amount': int(el[1]),
                 'image': item.image,
-                'link': '/item/{}'.format(el[0])
+                'link': '/item/{}'.format(el[0]),
+                'id': el[0]
             }
         cart_dict[item.title] = it
     total = 0
@@ -185,7 +197,23 @@ def category_page(category, page_number):
     limit = math.ceil(len(items) / 12)
     items_len = len(items)
     return render_template("items.html", items=items, title=cat, category=cat, number=int(page_number),
-                           length=items_len, limit=limit)
+                           length=items_len, limit=limit, link=items[0].category)
+
+
+@app.route('/item_delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def news_delete(id):
+    db_sess = db_session.create_session()
+    user_id = current_user.get_id()
+    user = db_sess.query(User).filter(User.id == user_id).first()
+    cart = user.cart
+    cart = cart.split(', ')
+    for el in cart:
+        if str(id) in el:
+            cart.remove(el)
+    user.cart = ', '.join(cart)
+    db_sess.commit()
+    return redirect('/cart')
 
 
 def main():

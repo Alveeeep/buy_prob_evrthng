@@ -47,113 +47,113 @@
             <ul class="pagination pg-blue">
                 <li class="page-item">
                     {% if number == 1 %}
-                    <a href="/{{items[0].category}}/1" class="page-link disabled" aria-label="Previous">
+                    <a href="/{{link}}/1" class="page-link disabled" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                     {% elif number > 1 %}
-                    <a href="/{{items[0].category}}/{{number - 1}}" class="page-link disabled" aria-label="Previous">
+                    <a href="/{{link}}/{{number - 1}}" class="page-link disabled" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                     {% endif %}
                 </li>
                 {% if number == 1 %}
                 <li class="page-item active">
-                    <a href="/{{items[0].category}}/1" class="page-link">
+                    <a href="/{{link}}/1" class="page-link">
                         <span aria-hidden="true">1</span>
                     </a>
                 </li>
                 {% else %}
                 <li class="page-item">
-                    <a href="/{{items[0].category}}/1" class="page-link">
+                    <a href="/{{link}}/1" class="page-link">
                         <span aria-hidden="true">1</span>
                     </a>
                 </li>
                 {% endif %}
                 {% if number == 2 %}
                 <li class="page-item active">
-                    <a href="/{{items[0].category}}/2" class="page-link">
+                    <a href="/{{link}}/2" class="page-link">
                         <span aria-hidden="true">2</span>
                     </a>
                 </li>
                 {% else %}
                 <li class="page-item">
-                    <a href="/{{items[0].category}}/2" class="page-link">
+                    <a href="/{{link}}/2" class="page-link">
                         <span aria-hidden="true">2</span>
                     </a>
                 </li>
                 {% endif %}
-                {% if 3 < limit %}
+                {% if 3 <= limit %}
                     {% if number == 3 %}
                     <li class="page-item active">
-                        <a href="/{{items[0].category}}/3" class="page-link">
+                        <a href="/{{link}}/3" class="page-link">
                             <span aria-hidden="true">3</span>
                         </a>
                     </li>
                     {% else %}
                     <li class="page-item">
-                        <a href="/{{items[0].category}}/3" class="page-link">
+                        <a href="/{{link}}/3" class="page-link">
                             <span aria-hidden="true">3</span>
                         </a>
                     </li>
                     {% endif %}
                 {% else %}
                     <li class="page-item disabled">
-                        <a href="/{{items[0].category}}/3" class="page-link">
+                        <a href="/{{link}}/3" class="page-link">
                             <span aria-hidden="true">3</span>
                         </a>
                     </li>
                 {% endif %}
-                {% if 4 < limit %}
+                {% if 4 <= limit %}
                     {% if number == 4 %}
                     <li class="page-item active">
-                        <a href="/{{items[0].category}}/4" class="page-link">
+                        <a href="/{{link}}/4" class="page-link">
                             <span aria-hidden="true">4</span>
                         </a>
                     </li>
                     {% else %}
                     <li class="page-item">
-                        <a href="/{{items[0].category}}/4" class="page-link">
+                        <a href="/{{link}}/4" class="page-link">
                             <span aria-hidden="true">4</span>
                         </a>
                     </li>
                     {% endif %}
                 {% else %}
                     <li class="page-item disabled">
-                        <a href="/{{items[0].category}}/4" class="page-link">
+                        <a href="/{{link}}/4" class="page-link">
                             <span aria-hidden="true">4</span>
                         </a>
                     </li>
                 {% endif %}
-                {% if 5 < limit %}
+                {% if 5 <= limit %}
                     {% if number == 5 %}
                     <li class="page-item active">
-                        <a href="/{{items[0].category}}/5" class="page-link">
+                        <a href="/{{link}}/5" class="page-link">
                             <span aria-hidden="true">5</span>
                         </a>
                     </li>
                     {% else %}
                     <li class="page-item">
-                        <a href="/{{items[0].category}}/5" class="page-link">
+                        <a href="/{{link}}/5" class="page-link">
                             <span aria-hidden="true">5</span>
                         </a>
                     </li>
                     {% endif %}
                 {% else %}
                     <li class="page-item disabled">
-                        <a href="/{{items[0].category}}/5" class="page-link">
+                        <a href="/{{link}}/5" class="page-link">
                             <span aria-hidden="true">5</span>
                         </a>
                     </li>
                 {% endif %}
                 {% if number < limit %}
                     <li class="page-item">
-                        <a href="/{{items[0].category}}/{{number + 1}}" class="page-link" aria-label="Next">
+                        <a href="/{{link}}/{{number + 1}}" class="page-link" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">
-                        <a href="/{{items[0].category}}/{{number + 1}}" class="page-link" aria-label="Next">
+                        <a href="/{{link}}/{{number + 1}}" class="page-link" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
