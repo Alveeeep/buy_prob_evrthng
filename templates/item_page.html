@@ -15,12 +15,15 @@
                         </span>
                     </p>
                     <p class="lead font-weight-bold">{{item.title}}</p>
-                    <p>
-                        {{item.about}}
-                    </p>
-                    <p>
-                        {{item.about_on_page}}
-                    </p>
+                    {% if item.about_on_page == None %}
+                        <p>
+                            {{item.about}}
+                        </p>
+                    {% else %}
+                        <p>
+                            {{item.about_on_page}}
+                        </p>
+                    {% endif %}
                     <form action="" class="d-flex justify-content-left" method="post">
                         {{ form.hidden_tag() }}
                         {{ form.amount(class="form-control", style="width: 100px", placeholder="Кол-во") }}

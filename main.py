@@ -1,5 +1,6 @@
 import unicodedata
 
+from flask_wtf import CsrfProtect, CSRFProtect
 from werkzeug.utils import redirect
 
 from data import db_session
@@ -7,14 +8,17 @@ from flask import Flask, render_template
 from forms.search import SearchForm
 from forms.login import LoginForm, RegisterForm
 from forms.amount import Amount
+from forms.buy import BuyForm
 from data.users import User
 from data.items import Item
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 import json
 import math
+from cloudipsp import Api, Checkout
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'onlineshop_secret_key'
+CSRFProtect(app)
+app.config['SECRET_KEY'] = 'onlineshop_secret_key_new'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -147,6 +151,7 @@ def item_page(item_id):
 @app.route('/cart', methods=['GET', 'POST'])
 def buy_page():
     id = current_user.get_id()
+    form = BuyForm()
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == id).first()
     cart = user.cart
@@ -179,7 +184,19 @@ def buy_page():
     total = 0
     for key, value in cart_dict.items():
         total += value['price']
-    return render_template('buying_page.html', cart=cart_dict, title='Корзина', total=total)
+    user.total = total
+    db_sess.commit()
+    if form.validate_on_submit():
+        api = Api(merchant_id=1396424,
+                  secret_key='test')
+        checkout = Checkout(api=api)
+        data = {
+            "currency": "RUB",
+            "amount": str(user.total) + "00"
+        }
+        url = checkout.url(data).get('checkout_url')
+        return redirect(url)
+    return render_template('buying_page.html', cart=cart_dict, title='Корзина', total=total, form=form)
 
 
 @app.route('/<category>/<page_number>')
